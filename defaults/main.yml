@@ -1,0 +1,30 @@
+---
+# defaults file for ansible-role-ntp-client
+
+ntp_client_packages:
+  - chrony
+
+ntp_client_service:
+  name: chronyd
+  state: started
+  enabled: yes
+
+ntp_client_config:
+  src: etc/chrony.conf.j2
+  dest: /etc/chrony.conf
+
+ntp_client_timezone: Etc/UTC
+
+ntp_client_time_sources:
+  - type: server
+    address: 0.pool.ntp.org
+    options: iburst
+  - type: server
+    address: 1.pool.ntp.org
+    options: iburst
+  - type: server
+    address: 2.pool.ntp.org
+    options: iburst
+  - type: server
+    address: 3.pool.ntp.org
+    options: iburst

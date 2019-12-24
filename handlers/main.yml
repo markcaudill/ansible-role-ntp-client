@@ -1,0 +1,8 @@
+---
+# handlers file for ansible-role-ntp-client
+
+- name: restart ntp client
+  service:
+    name: "{{ ntp_client_service.name }}"
+    state: restarted
+  when: ntp_client_service_enabled | bool

@@ -1,0 +1,23 @@
+---
+# tasks file for ansible-role-ntp-client
+
+- name: Ensure packages are installed
+  package:
+    name: "{{ ntp_client_packages }}"
+
+- name: Ensure NTP client is configured
+  template:
+    src: "{{ ntp_client_config.src }}"
+    dest: "{{ ntp_client_config.dest }}"
+    backup: true
+  notify: restart ntp client
+
+- name: Ensure NTP client current state and boot state are congfigured
+  service:
+    name: "{{ ntp_client_service.name }}"
+    state: "{{ ntp_client_service.state }}"
+    enabled: "{{ ntp_client_service.enabled }}"
+
+- name: Ensure server timezone is configured
+  timezone:
+    name: "{{ ntp_client_timezone }}"

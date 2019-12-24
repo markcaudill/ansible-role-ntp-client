@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  role_name: ntp-client
+  author: Mark Caudill
+  description: NTP client installation and configuration for Linux
+  company: ''
+  issue_tracker_url: https://gitlab.com/markcaudill/ansible-role-ntp-client/issues
+  license: MIT
+  min_ansible_version: 2.9
+  platforms:
+  - name: EL
+    versions:
+     - 7
+  galaxy_tags:
+    - ntp
+    - time
+    - date
+dependencies: []
