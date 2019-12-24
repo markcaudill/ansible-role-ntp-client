@@ -71,7 +71,7 @@ Example Playbook
 
     - hosts: all
       roles:
-         - markcaudill.ntp-client
+         - markcaudill.ntp_client
 
 License
 -------
