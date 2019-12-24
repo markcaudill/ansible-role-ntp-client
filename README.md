@@ -66,6 +66,13 @@ Dependencies
 
 None
 
+Installation
+------------
+
+```sh
+ansible-galaxy install markcaudill.ntp_client
+```
+
 Example Playbook
 ----------------
 
