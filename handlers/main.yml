@@ -5,4 +5,4 @@
   service:
     name: "{{ ntp_client_service.name }}"
     state: restarted
-  when: ntp_client_service_enabled | bool
+  when: ntp_client_service.enabled | bool
