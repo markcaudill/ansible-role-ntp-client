@@ -1,30 +1,46 @@
 ---
-# defaults file for ansible-role-ntp-client
+# defaults file for ntp_client
 
-ntp_client_packages:
-  - chrony
-
-ntp_client_service:
-  name: chronyd
-  state: started
-  enabled: yes
-
-ntp_client_config:
-  src: etc/chrony.conf.j2
-  dest: /etc/chrony.conf
-
-ntp_client_timezone: Etc/UTC
-
-ntp_client_time_sources:
-  - type: server
-    address: 0.pool.ntp.org
-    options: iburst
-  - type: server
-    address: 1.pool.ntp.org
-    options: iburst
-  - type: server
-    address: 2.pool.ntp.org
-    options: iburst
-  - type: server
-    address: 3.pool.ntp.org
-    options: iburst
+ntp_client:
+  tags:
+    - ntp
+    - chrony
+  packages:
+    - chrony
+  service:
+    name: chronyd
+    state: started
+    enabled: yes
+  timezone: Etc/UTC
+  config:
+    template:
+      src: etc/chrony.conf.j2
+      dest: /etc/chrony.conf
+      owner: root
+      group: root
+      mode: 0644
+      backup: true
+    # These defaults intend to approximate the default EL 7 and 8 configs
+    servers:
+      - hostname: 0.pool.ntp.org
+        options:
+          - iburst
+      - hostname: 1.pool.ntp.org
+        options:
+          - iburst
+      - hostname: 2.pool.ntp.org
+        options:
+          - iburst
+      - hostname: 3.pool.ntp.org
+        options:
+          - iburst
+    pools:
+      - hostname: 2.centos.pool.ntp.org
+        options:
+          - iburst
+    driftfile: /var/lib/chrony/drift
+    makestep: "0.1 3"
+    rtsync: true
+    keyfile: /etc/chrony.keys
+    leapsectz: right/UTC
+    logdir: /var/log/chrony

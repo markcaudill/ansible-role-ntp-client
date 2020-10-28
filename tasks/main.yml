@@ -1,23 +1,35 @@
 ---
-# tasks file for ansible-role-ntp-client
+# tasks file for ntp_client
 
-- name: Ensure packages are installed
+- name: ENSURE PACKAGES ARE INSTALLED
   package:
-    name: "{{ ntp_client_packages }}"
+    name: "{{ ntp_client['packages'] }}"
+  tags: ntp_client['tags']
 
-- name: Ensure NTP client is configured
+- name: ENSURE CONFIGURATION IS UP TO DATE
   template:
-    src: "{{ ntp_client_config.src }}"
-    dest: "{{ ntp_client_config.dest }}"
-    backup: true
+    src: "{{ ntp_client['config']['template']['src'] }}"
+    dest: "{{ ntp_client['config']['template']['dest'] }}"
+    owner: "{{ ntp_client['config']['template']['owner'] }}"
+    group: "{{ ntp_client['config']['template']['group'] }}"
+    mode: "{{ ntp_client['config']['template']['mode'] }}"
+    backup: "{{ ntp_client['config']['template']['backup'] }}"
   notify: restart ntp client
+  tags: ntp_client['tags']
 
-- name: Ensure NTP client current state and boot state are congfigured
+- name: "ENSURE NTP DAEMON BOOT STATE IS CONFIGURED ({{ ntp_client['service']['enabled'] }})"
   service:
-    name: "{{ ntp_client_service.name }}"
-    state: "{{ ntp_client_service.state }}"
-    enabled: "{{ ntp_client_service.enabled }}"
+    name: "{{ ntp_client['service']['name'] }}"
+    enabled: "{{ ntp_client['service']['enabled'] }}"
+  tags: ntp_client['tags']
 
-- name: Ensure server timezone is configured
+- name: "ENSURE NTP DAEMON IS IN DESIRED STATE ({{ ntp_client['service']['state'] }})"
+  service:
+    name: "{{ ntp_client['service']['name'] }}"
+    state: "{{ ntp_client['service']['state'] }}"
+  tags: ntp_client['tags']
+
+- name: ENSURE SERVER TIMEZONE IS CONFIGURED
   timezone:
-    name: "{{ ntp_client_timezone }}"
+    name: "{{ ntp_client['timezone'] }}"
+  tags: ntp_client['tags']

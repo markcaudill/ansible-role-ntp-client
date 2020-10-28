@@ -3,20 +3,44 @@ dependency:
   name: galaxy
 driver:
   name: docker
-lint:
-  name: yamllint
 platforms:
-  - name: instance
-    image: fiercely/centos7:systemd
+  - name: rhel8_ntp_client
+    image: centos:8
     privileged: True
-    volume_mounts:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    capabilities:
+      - SYS_ADMIN
     command: "/usr/sbin/init"
+    pre_build_image: true
+  - name: rhel7_ntp_client
+    image: centos:7
+    privileged: True
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    capabilities:
+      - SYS_ADMIN
+    command: "/usr/sbin/init"
+    pre_build_image: true
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
+  config_options:
+    defaults:
+      interpreter_python: auto_silent
+      callback_whitelist: profile_tasks, timer, yaml
+    ssh_connection:
+      pipelining: false
 verifier:
-  name: testinfra
-  lint:
-    name: flake8
+  name: ansible
+lint: |
+  set -e
+  yamllint -v
+  yamllint .
+  ansible-lint --version
+  ansible-lint -v .
