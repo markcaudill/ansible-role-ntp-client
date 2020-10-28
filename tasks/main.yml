@@ -4,7 +4,9 @@
 - name: ENSURE PACKAGES ARE INSTALLED
   package:
     name: "{{ ntp_client['packages'] }}"
-  tags: ntp_client['tags']
+  tags:
+    - ntp
+    - chrony
 
 - name: ENSURE CONFIGURATION IS UP TO DATE
   template:
@@ -15,21 +17,29 @@
     mode: "{{ ntp_client['config']['template']['mode'] }}"
     backup: "{{ ntp_client['config']['template']['backup'] }}"
   notify: restart ntp client
-  tags: ntp_client['tags']
+  tags:
+    - ntp
+    - chrony
 
 - name: "ENSURE NTP DAEMON BOOT STATE IS CONFIGURED ({{ ntp_client['service']['enabled'] }})"
   service:
     name: "{{ ntp_client['service']['name'] }}"
     enabled: "{{ ntp_client['service']['enabled'] }}"
-  tags: ntp_client['tags']
+  tags:
+    - ntp
+    - chrony
 
 - name: "ENSURE NTP DAEMON IS IN DESIRED STATE ({{ ntp_client['service']['state'] }})"
   service:
     name: "{{ ntp_client['service']['name'] }}"
     state: "{{ ntp_client['service']['state'] }}"
-  tags: ntp_client['tags']
+  tags:
+    - ntp
+    - chrony
 
 - name: ENSURE SERVER TIMEZONE IS CONFIGURED
   timezone:
     name: "{{ ntp_client['timezone'] }}"
-  tags: ntp_client['tags']
+  tags:
+    - ntp
+    - chrony

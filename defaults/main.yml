@@ -2,9 +2,6 @@
 # defaults file for ntp_client
 
 ntp_client:
-  tags:
-    - ntp
-    - chrony
   packages:
     - chrony
   service:
