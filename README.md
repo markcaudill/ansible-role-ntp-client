@@ -15,7 +15,6 @@ Role Variables
 
 See (`defaults/main.yml` for a complete listing).
 
-- `ntp_client['tags']`: a list of the tags applied to each task in this role (default: `[ntp, chrony]`)
 - `ntp_client['packages']`: a list of packages installed (default: `[chrony]`)
 - `ntp_client['service']`: the service/daemon configuration (default: `chronyd`, started and enabled on boot)
 - `ntp_client['timezone']`: the timezone to use for the system (this isn't directly NTP-related) (default: `Etc/UTC`)
