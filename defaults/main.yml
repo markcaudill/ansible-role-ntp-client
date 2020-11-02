@@ -8,7 +8,6 @@ ntp_client:
     name: chronyd
     state: started
     enabled: yes
-  timezone: Etc/UTC
   config:
     template:
       src: etc/chrony.conf.j2

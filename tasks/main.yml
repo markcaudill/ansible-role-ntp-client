@@ -36,10 +36,3 @@
   tags:
     - ntp
     - chrony
-
-- name: ENSURE SERVER TIMEZONE IS CONFIGURED
-  timezone:
-    name: "{{ ntp_client['timezone'] }}"
-  tags:
-    - ntp
-    - chrony
