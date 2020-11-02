@@ -3,36 +3,36 @@
 
 - name: ENSURE PACKAGES ARE INSTALLED
   package:
-    name: "{{ ntp_client['packages'] }}"
+    name: "{{ ntp_client_packages }}"
   tags:
     - ntp
     - chrony
 
 - name: ENSURE CONFIGURATION IS UP TO DATE
   template:
-    src: "{{ ntp_client['config']['template']['src'] }}"
-    dest: "{{ ntp_client['config']['template']['dest'] }}"
-    owner: "{{ ntp_client['config']['template']['owner'] }}"
-    group: "{{ ntp_client['config']['template']['group'] }}"
-    mode: "{{ ntp_client['config']['template']['mode'] }}"
-    backup: "{{ ntp_client['config']['template']['backup'] }}"
+    src: "{{ ntp_client_template_src }}"
+    dest: "{{ ntp_client_template_dest }}"
+    owner: "{{ ntp_client_template_owner }}"
+    group: "{{ ntp_client_template_group }}"
+    mode: "{{ ntp_client_template_mode }}"
+    backup: "{{ ntp_client_template_backup }}"
   notify: restart ntp client
   tags:
     - ntp
     - chrony
 
-- name: "ENSURE NTP DAEMON BOOT STATE IS CONFIGURED ({{ ntp_client['service']['enabled'] }})"
+- name: "ENSURE NTP DAEMON BOOT STATE IS CONFIGURED ({{ ntp_client_service_enabled }})"
   service:
-    name: "{{ ntp_client['service']['name'] }}"
-    enabled: "{{ ntp_client['service']['enabled'] }}"
+    name: "{{ ntp_client_service_name }}"
+    enabled: "{{ ntp_client_service_enabled }}"
   tags:
     - ntp
     - chrony
 
-- name: "ENSURE NTP DAEMON IS IN DESIRED STATE ({{ ntp_client['service']['state'] }})"
+- name: "ENSURE NTP DAEMON IS IN DESIRED STATE ({{ ntp_client_service_state }})"
   service:
-    name: "{{ ntp_client['service']['name'] }}"
-    state: "{{ ntp_client['service']['state'] }}"
+    name: "{{ ntp_client_service_name }}"
+    state: "{{ ntp_client_service_state }}"
   tags:
     - ntp
     - chrony

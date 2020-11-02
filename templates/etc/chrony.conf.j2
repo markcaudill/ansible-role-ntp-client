@@ -1,30 +1,30 @@
 # {{ ansible_managed }}
 
-{% for server in ntp_client['config']['servers'] %}
+{% for server in ntp_client_config_servers %}
 server {{ server['hostname'] }} {{ server['options'] | join(' ') }}
 {% endfor %}
 
-{% for pool in ntp_client['config']['pools'] %}
+{% for pool in ntp_client_config_pools %}
 pool {{ pool['hostname'] }} {{ pool['options'] | join(' ') }}
 {% endfor %}
 
 # Record the rate at which the system clock gains/losses time.
-driftfile {{ ntp_client['config']['driftfile'] }}
+driftfile {{ ntp_client_config_driftfile }}
 
-# Allow the system clock to be stepped in the first three updates
-# if its offset is larger than 1 second.
-makestep {{ ntp_client['config']['makestep'] }}
+# Allow the system clock to be stepped in the first Y updates
+# if its offset is larger than X seconds.
+makestep {{ ntp_client_config_makestep }}
 
-{% if ntp_client['config']['rtsync'] %}
+{% if ntp_client_config_rtsync %}
 # Enable kernel synchronization of the real-time clock (RTC).
 rtcsync
 {% endif %}
 
 # Specify file containing keys for NTP authentication.
-keyfile {{ ntp_client['config']['keyfile'] }}
+keyfile {{ ntp_client_config_keyfile }}
 
 # Get TAI-UTC offset and leap seconds from the system tz database.
-leapsectz {{ ntp_client['config']['leapsectz'] }}
+leapsectz {{ ntp_client_config_leapsectz }}
 
 # Specify directory for log files.
-logdir {{ ntp_client['config']['logdir'] }}
+logdir {{ ntp_client_config_logdir }}

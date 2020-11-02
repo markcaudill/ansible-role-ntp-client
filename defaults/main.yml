@@ -1,42 +1,41 @@
 ---
 # defaults file for ntp_client
 
-ntp_client:
-  packages:
-    - chrony
-  service:
-    name: chronyd
-    state: started
-    enabled: yes
-  config:
-    template:
-      src: etc/chrony.conf.j2
-      dest: /etc/chrony.conf
-      owner: root
-      group: root
-      mode: 0644
-      backup: true
-    # These defaults intend to approximate the default EL 7 and 8 configs
-    servers:
-      - hostname: 0.pool.ntp.org
-        options:
-          - iburst
-      - hostname: 1.pool.ntp.org
-        options:
-          - iburst
-      - hostname: 2.pool.ntp.org
-        options:
-          - iburst
-      - hostname: 3.pool.ntp.org
-        options:
-          - iburst
-    pools:
-      - hostname: 2.centos.pool.ntp.org
-        options:
-          - iburst
-    driftfile: /var/lib/chrony/drift
-    makestep: "1.0 3"
-    rtsync: true
-    keyfile: /etc/chrony.keys
-    leapsectz: right/UTC
-    logdir: /var/log/chrony
+ntp_client_packages:
+  - chrony
+
+ntp_client_service_name: chronyd
+ntp_client_service_state: started
+ntp_client_service_enabled: yes
+
+ntp_client_template_src: etc/chrony.conf.j2
+ntp_client_template_dest: /etc/chrony.conf
+ntp_client_template_owner: root
+ntp_client_template_group: root
+ntp_client_template_mode: 0644
+ntp_client_template_backup: true
+
+# These defaults intend to approximate the default EL 7 and 8 configs
+ntp_client_config_servers:
+  - hostname: 0.pool.ntp.org
+    options:
+      - iburst
+  - hostname: 1.pool.ntp.org
+    options:
+      - iburst
+  - hostname: 2.pool.ntp.org
+    options:
+      - iburst
+  - hostname: 3.pool.ntp.org
+    options:
+      - iburst
+ntp_client_config_pools:
+  - hostname: 2.centos.pool.ntp.org
+    options:
+      - iburst
+ntp_client_config_driftfile: /var/lib/chrony/drift
+ntp_client_config_makestep: "1.0 3"
+ntp_client_config_rtsync: true
+ntp_client_config_keyfile: /etc/chrony.keys
+ntp_client_config_leapsectz: right/UTC
+ntp_client_config_logdir: /var/log/chrony

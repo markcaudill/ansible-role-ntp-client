@@ -15,10 +15,23 @@ Role Variables
 
 See (`defaults/main.yml` for a complete listing).
 
-- `ntp_client['packages']`: a list of packages installed (default: `[chrony]`)
-- `ntp_client['service']`: the service/daemon configuration (default: `chronyd`, started and enabled on boot)
-- `ntp_client['timezone']`: the timezone to use for the system (this isn't directly NTP-related) (default: `Etc/UTC`)
-- `ntp_client['config']`: the variables used to generate the `chrony.conf` file (see `defaults/main.yml` for more detail)
+- `ntp_client_config_servers` is the list of servers to configured
+    - Example:
+      ```yaml
+      - hostname: 0.pool.ntp.org
+          options:
+          - iburst
+      - hostname: 1.pool.ntp.org
+         options:
+         - iburst
+      ```
+- `ntp_client_config_pools` is the list of pools to configure
+    - Example:
+      ```yaml
+	  - hostname: 2.centos.pool.ntp.org
+	      options:
+	      - iburst
+      ```
 
 Dependencies
 ------------
